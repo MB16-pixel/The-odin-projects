@@ -6,6 +6,17 @@ const pages = document.querySelector("#pgs");
 const popUp = document.querySelector(".pop-up")
 const form = document.querySelector(".elements"); 
 const close = document.querySelector("#close");
+const collectionDiv = document.querySelector(".content")
+const bookList = document.createElement('div');
+const titleH3 = document.createElement('h3');
+const authorPara = document.createElement('p');
+const pages = document.createElement('p');
+const readBtn = document.createElement('button');
+const delBtn = document.createElement('button');
+
+bookList.classList.add('books')
+collectionDiv.classList.add('content');
+collectionDiv.appendChild(bookList);
 
 const myLibrary = [];
 
