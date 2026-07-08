@@ -45,6 +45,15 @@ function displayBookFromLibrary(){
       bookList.remove();
       myLibrary = myLibrary.filter(item => item.id !== book.id);
     })
+
+    bookList.querySelector('.read-btn').addEventListener("click",function(){
+      book.read = !book.read;
+       if (book.read) {
+        this.textContent = "Not Read";
+      } else {
+        this.textContent = "Read";
+  }
+    })
   }
 }
 
