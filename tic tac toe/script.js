@@ -2,7 +2,7 @@ const buttons = document.querySelectorAll("#btn");
 const res = document.getElementById("res");
 console.log(buttons) // returns a nodeList of all the buttons
 
-text = "O";
+text = "X";
 clicked = Array(9).fill("");
 // Loop through the NodeList to attach the listener to each individual element
 buttons.forEach((btn,index) => {
