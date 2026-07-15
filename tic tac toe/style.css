@@ -22,13 +22,5 @@ body {
 
    /* 2. Prevent the font box from stretching the borders */
   font-size: 2rem;
-  box-sizing: border-box;
-  
-  /* 3. Center the X and O perfectly inside the box */
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  
-  /* 4. Fix vertical baseline alignment issues */
   vertical-align: middle; 
 }
