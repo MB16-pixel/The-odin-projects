@@ -1,5 +1,9 @@
-const btnClicked = document.getElementById("btn");
+const buttons = document.querySelectorAll("#btn");
+console.log(buttons) // returns a nodeList of all the buttons
 
-btnClicked.addEventListener("click",function(){
-  btnClicked.textContent = "O"
-})
+// Loop through the NodeList to attach the listener to each individual element
+buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        btn.textContent = "O"
+    });
+});
