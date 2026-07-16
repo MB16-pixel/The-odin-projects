@@ -26,4 +26,16 @@
 
 ### 7. Continuing the Game After Someone Won
 * **Problem:** Even after a winner was declared and logged, players could keep clicking the remaining open squares on the board.
-* **Solution:** I implemented document.querySelector(".board").style.pointerEvents = "none";
+* **Solution:** I implemented `document.querySelector(".board").style.pointerEvents = "none";` to temporarily freeze user interaction with the grid layout.
+
+### 8. Object Scope Reference Errors
+* **Problem:** When migrating data variables (`clicked`, `text`) and functions into an object literal structure, the code crashed with `ReferenceError`. The functions were still looking for variables out in the global scope.
+* **Solution:** I learned that object methods must use the prefix `this.` to access data properties belonging to the same object, and properties stored inside sub-objects must be explicitly routed (e.g., `this.dom.buttons`).
+
+### 9. Nested Event Listeners and Accumulation
+* **Problem:** I placed the restart button's event listener *inside* the grid buttons' `.forEach()` loop. This caused the restart listener to attach 9 separate times, and calling the initialization function repeatedly inside the reset logic created an exponential stack of duplicate listeners that broke turn handling.
+* **Solution:** I separated the architecture so the restart event listener sits entirely outside the grid selection loop, ensuring it is attached exactly once when the program initializes.
+
+### 10. The `this` Execution Context Trap
+* **Problem:** Using a standard anonymous callback function (`function() {}`) inside an event listener changed the meaning of the `this` keyword, pointing it at the HTML DOM button element that was clicked instead of the underlying object manager.
+* **Solution:** I switched to standard arrow functions (`() => {}`) for object method event listeners because arrow functions naturally preserve the parent lexical scope of `this`.
