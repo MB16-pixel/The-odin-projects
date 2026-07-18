@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  text-align: center;
+  background-color:black;
+  color: rgb(102, 250, 57);
+}
+
+.container{
+  text-align: center;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.right{
+  width: 20%;
+  height: 100vh;
+  margin: 20px;
+  background-color: rgb(75, 75, 75);
+}
+
+.left{
+  width:75%;
+  height: 100vh;
+  background-color: rgb(75, 75, 75);
+  margin: 20px;
+}
