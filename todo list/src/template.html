@@ -11,9 +11,41 @@
     
     <div class="right">
       <h1>Projects</h1>
+      <button class="addProject">+ Add a project</button>
+      <button class="Default">Default</button>
+      <button>Work</button>
+      <button>Studies</button>
     </div>
     <div class="left">
       <h1>Todos</h1>
+      <div class="todos">
+        <button class="addTodo">Add a todo</button>
+        <div class="formContainer">
+          <form>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" placeholder="task name" required>
+            <label for="desc">Description</label>
+            <textarea name="desc" id="desc" placeholder="details about your task" maxlength="200"></textarea>
+            <div id="date">
+              <label for="date">Due Date</label>
+              <input type="date" name="date" id="date" required>
+            </div>
+            <div class="priority">
+              <label for="priority">Priority</label>
+              <select id="priority" required>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+            <button type="submit">Add task</button>
+            <button id="close">Close</button>
+          </form>
+        </div>
+        <div class="todoList">
+          
+        </div>
+      </div>
     </div>
   </div>
 </body>

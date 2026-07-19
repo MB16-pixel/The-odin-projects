@@ -1,5 +1,6 @@
 // src/index.js
 import "./styles.css";
-import { greeting } from "./greeting.js";
+import { dom } from './dom.js'; // Adjust filename as needed
 
-console.log(greeting);
+// Run the setup function to wire up the event listeners
+dom();
