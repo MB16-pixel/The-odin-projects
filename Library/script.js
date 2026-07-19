@@ -22,7 +22,7 @@ function displayBookFromLibrary(){
   for(let book of myLibrary){
     const bookList = document.createElement('div');
     bookList.classList.add('books');
-    
+      
     if(book.read === true){
       read += "Read";
     } else if(book.read === false){

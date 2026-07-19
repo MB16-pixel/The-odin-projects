@@ -1,36 +1,50 @@
-export function dom(){
-  const addProject = document.querySelector(".addProject");
+export function dom() {
   const addTodo = document.querySelector(".addTodo");
-  const form = document.querySelector(".formContainer");
+  const formContainer = document.querySelector(".formContainer");
+  const form = document.querySelector(".formContainer form");
   const close = document.getElementById("close");
-  const title = document.getElementById("title");
-  const desc = document.getElementById("desc");
-  const date = document.getElementById("date");
-  const priority = document.getElementById("priority");
-  const submit = document.querySelector("submit");
-  const todos = document.querySelector("todos");
+  const titleInput = document.getElementById("title");
+  const descInput = document.getElementById("desc");
+  const dueDateInput = document.getElementById("dueDate");
+  const prioritySelect = document.getElementById("priority");
+  const todoList = document.querySelector(".todoList");
 
-  addTodo.addEventListener("click",function(){
-    form.style.display = "block";
-  })
+  addTodo.addEventListener("click", function () {
+    formContainer.style.display = "flex";
+  });
 
-  close.addEventListener("click",function(){
-    form.style.display = "none";
-  })
+  close.addEventListener("click", function (event) {
+    event.preventDefault();
+    formContainer.style.display = "none";
+  });
 
-  submit.addEventListener("click",function(){
-    const todoList = document.createElement('div');
-    todoList.classList.add('todoList');
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-    todoList.innerHTML=`
-      
-    `
-  })
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
-  return({
-    title: title.innerText,
-    desc: desc.innerText,
-    date: date.innerText,
-    priority: priority.value
-  })
+    const todoItem = document.createElement("div");
+    todoItem.classList.add("todoItem");
+
+    todoItem.innerHTML = `
+      <p><strong>Title:</strong> ${titleInput.value}</p>
+      <p><strong>Description:</strong> ${descInput.value}</p>
+      <p><strong>Due Date:</strong> ${dueDateInput.value}</p>
+      <p><strong>Priority:</strong> ${prioritySelect.value}</p>
+    `;
+
+    todoList.appendChild(todoItem);
+    form.reset();
+    formContainer.style.display = "none";
+  });
+
+  return {
+    title: titleInput.value,
+    desc: descInput.value,
+    date: dueDateInput.value,
+    priority: prioritySelect.value,
+  };
 }
