@@ -7,7 +7,8 @@ export function dom(){
   const desc = document.getElementById("desc");
   const date = document.getElementById("date");
   const priority = document.getElementById("priority");
-
+  const submit = document.querySelector("submit");
+  const todos = document.querySelector("todos");
 
   addTodo.addEventListener("click",function(){
     form.style.display = "block";
@@ -15,6 +16,15 @@ export function dom(){
 
   close.addEventListener("click",function(){
     form.style.display = "none";
+  })
+
+  submit.addEventListener("click",function(){
+    const todoList = document.createElement('div');
+    todoList.classList.add('todoList');
+
+    todoList.innerHTML=`
+      
+    `
   })
 
   return({

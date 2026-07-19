@@ -91,7 +91,10 @@ body {
   height: 50px;
   width: 80%;
   background-color: red;
-  justify-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .todos{
