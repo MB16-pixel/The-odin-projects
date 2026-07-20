@@ -72,8 +72,18 @@ function todo(title, desc, date, priority){
     });
     
     editBtn.addEventListener("click", function() {
-      // Add edit functionality here
-    });
+    // Populate form with current values
+    titleInput.value = content.querySelector("p:nth-child(1)").textContent.replace("Title: ", "");
+    descInput.value = content.querySelector("p:nth-child(2)").textContent.replace("Description: ", "");
+    dueDateInput.value = content.querySelector("p:nth-child(3)").textContent.replace("Due Date: ", "");
+    prioritySelect.value = content.querySelector("p:nth-child(4)").textContent.replace("Priority: ", "");
+    
+    // Show form and mark as editing
+    formContainer.style.display = "flex";
+    todoItem.dataset.editing = "true"; // Mark this item as being edited
+    todoItem.dataset.toEdit = true; // Store reference
+    todoItem.remove();
+  });
     
     deleteBtn.addEventListener("click", function() {
       todoItem.remove();
