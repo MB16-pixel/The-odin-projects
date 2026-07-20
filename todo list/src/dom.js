@@ -12,6 +12,7 @@ export function dom() {
   const done = document.getElementById("done");
   const edit = document.getElementById("edit");
   const deleteBtn = document.getElementById("delete");
+  const todos = document.querySelector("todos");
 
   return {
     titleInput,
@@ -26,6 +27,7 @@ export function dom() {
     btns,
     done,
     edit,
-    deleteBtn
+    deleteBtn,
+    todos
   };
 }
