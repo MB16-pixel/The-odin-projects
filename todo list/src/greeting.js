@@ -1,2 +1,6 @@
 // greeting.js
-export const greeting = "Hello, Odinite!";
+export function greetings(){
+  return{
+    greets: "heello",
+  }
+}
