@@ -11,21 +11,13 @@
     
     <div class="right">
       <h1>Projects</h1>
-      <button class="addProject">
-        <span class="shadow"></span>
-          <span class="edge"></span>
-          <div class="front">
-            <span>+ Add project</span>
-          </div>
-      </button>
+      <button class="addProject">+ Add project</button>
       <button class="Default">Default</button>
-      <button>Work</button>
-      <button>Studies</button>
     </div>
     <div class="left">
       <h1>Todos</h1>
       <div class="todos">
-        <button class="addTodo">Add a todo</button>
+        <button class="addTodo"> + Add a todo</button>
         <div class="formContainer">
           <form>
             <label for="title">Title</label>
@@ -45,6 +37,16 @@
               </select>
             </div>
             <button type="submit" class="submit">Add task</button>
+            <button id="close">Close</button>
+          </form>
+        </div>
+        <div class="projectForm">
+          <form>
+            <label for="projectname">
+              Project Name:
+              <input type="text" id="projectname">
+            </label>
+            <button type="submit" id="submitProject">+ Add project</button>
             <button id="close">Close</button>
           </form>
         </div>

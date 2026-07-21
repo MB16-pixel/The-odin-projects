@@ -9,10 +9,11 @@ export function dom() {
   const prioritySelect = document.getElementById("priority");
   const todoList = document.querySelector(".todoList");
   const btns = document.querySelector(".btns");
-  const done = document.getElementById("done");
-  const edit = document.getElementById("edit");
-  const deleteBtn = document.getElementById("delete");
   const todos = document.querySelector("todos");
+  const projectForm = document.querySelector(".projectForm");
+  const addProject = document.querySelector(".addProject");
+  const submitProject = document.querySelector(".submitProject");
+  const projectForm = document.querySelector(".submitProject form");
 
   return {
     titleInput,
@@ -25,9 +26,10 @@ export function dom() {
     close,
     todoList,
     btns,
-    done,
-    edit,
-    deleteBtn,
-    todos
+    todos,
+    projectForm,
+    addProject,
+    submitProject,
+    projectForm
   };
 }
