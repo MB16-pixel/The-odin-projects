@@ -12,7 +12,9 @@
     <div class="right">
       <h1>Projects</h1>
       <button class="addProject">+ Add project</button>
-      <button class="Default">Default</button>
+      <div class="projectList">
+        <button class="Default">Default</button>
+      </div>
     </div>
     <div class="left">
       <h1>Todos</h1>
@@ -44,7 +46,7 @@
           <form>
             <label for="projectname">
               Project Name:
-              <input type="text" id="projectName">
+              <input type="text" id="projectName" required>
             </label>
             <button type="submit" id="submitProject">+ Add project</button>
             <button id="close">Close</button>
