@@ -13,7 +13,8 @@ export function dom() {
   const projectForm = document.querySelector(".projectForm");
   const addProject = document.querySelector(".addProject");
   const submitProject = document.querySelector(".submitProject");
-  const projectForm = document.querySelector(".submitProject form");
+  const submitProjectForm = document.querySelector(".submitProject form");
+  const projectName = document.querySelector(".projectName");
 
   return {
     titleInput,
@@ -30,6 +31,7 @@ export function dom() {
     projectForm,
     addProject,
     submitProject,
-    projectForm
+    submitProjectForm,
+    projectName
   };
 }

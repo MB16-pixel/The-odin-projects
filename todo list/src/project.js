@@ -1,6 +1,6 @@
 import { dom } from "./dom.js";
 
-const { projectForm, addProject, submitProject, close, } = dom();
+const { projectForm, addProject, submitProject, close, submitProjectForm, projectName} = dom();
 
 function project(name){
   addProject.addEventListener("click",function(){
@@ -10,13 +10,23 @@ function project(name){
     event.preventDefault();
     projectForm.style.display = "none";
   });
-  form.addEventListener("submit", function (event) {
+  submitProjectForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    if (!form.checkValidity()) {
+    if (!submitProjectForm.checkValidity()) {
       form.reportValidity();
       return;
     }
+
+    const projectItem = document.createElement("div");
+    projectItem.classList.add("projectItem");
+
+    const content = document.createElement("div");
+    content.classList.add("projectContent");
+
+     content.innerHTML = `
+      <button></button>
+    `;
   })
 }
 
