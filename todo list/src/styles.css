@@ -128,6 +128,7 @@ button{
   padding: 10px;
   border-radius: 6px;
   position: relative;
+  margin-top: 10px;
 }
 
 .todoContent {
@@ -162,21 +163,21 @@ button{
   align-items: center;
 }
 
-#done{
+.done{
   background-color: rgb(48, 246, 48);
   padding: 5px 10px;
   font-size: 12px;
   margin: 0;
 }
 
-#edit{
+.edit{
   background-color: rgb(250, 250, 136);
   padding: 5px 10px;
   font-size: 12px;
   margin: 0;
 }
 
-#delete{
+.delete{
   background-color: rgb(255, 142, 142);
   padding: 5px 10px;
   font-size: 12px;

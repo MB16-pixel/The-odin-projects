@@ -1,97 +1,131 @@
 import { dom } from './dom.js';
 
 const {
-    titleInput,
-    descInput,
-    dueDateInput,
-    prioritySelect,
-    addTodo,
-    formContainer,
-    form, 
-    close,
-    todoList,
-    btns,
-    done,
-    edit,
-    deleteBtn } = dom();
+    titleInput, descInput, dueDateInput, prioritySelect,
+    addTodo, formContainer, form, close
+} = dom();
 
-function todo(title, desc, date, priority){
-  addTodo.addEventListener("click", function () {
-    formContainer.style.display = "flex";
-  });
+let currentActiveWorkspace = null;
+let isInitialized = false;
 
-  close.addEventListener("click", function (event) {
-    event.preventDefault();
-    formContainer.style.display = "none";
-  });
+function todo(projectWorkspace) {
+  // Update our pointer to track which physical project view is currently open
+  currentActiveWorkspace = projectWorkspace;
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    const todoItem = document.createElement("div");
-    todoItem.classList.add("todoItem");
-    
-    const content = document.createElement("div");
-    content.classList.add("todoContent");
-    content.innerHTML = `
-      <p><strong>Title:</strong> ${titleInput.value}</p>
-      <p><strong>Description:</strong> ${descInput.value}</p>
-      <p><strong>Due Date:</strong> ${dueDateInput.value}</p>
-      <p><strong>Priority:</strong> ${prioritySelect.value}</p>
-    `;
-    
-    const buttonContainer = document.createElement("div");
-    buttonContainer.classList.add("todoButtons");
-    buttonContainer.innerHTML = `
-      <button id="done">✔️Done</button>
-      <button id="edit">✏️Edit</button>
-      <button id="delete">❌Delete</button>
-    `;
-    
-    todoItem.appendChild(content);
-    todoItem.appendChild(buttonContainer);
-    todoList.appendChild(todoItem);
-    
-    // Add event listeners to the buttons
-    const doneBtn = buttonContainer.querySelector("#done");
-    const editBtn = buttonContainer.querySelector("#edit");
-    const deleteBtn = buttonContainer.querySelector("#delete");
-    
-    doneBtn.addEventListener("click", function() {
-      content.style.textDecoration = "line-through";
-      doneBtn.style.backgroundColor = "gray"
+  // Global form listeners only need to be attached once ever
+  if (!isInitialized) {
+    addTodo.addEventListener("click", function () {
+      form.reset();
+      // Remove any leftover edit targets
+      form.removeAttribute('data-editing-index');
+      formContainer.style.display = "flex";
     });
-    doneBtn.addEventListener("dblclick", function() {
-      content.style.textDecoration = "none";
-      doneBtn.style.backgroundColor = "rgb(48, 246, 48)";
+
+    close.addEventListener("click", function (event) {
+      event.preventDefault();
+      formContainer.style.display = "none";
     });
-    
-    editBtn.addEventListener("click", function() {
-    // Populate form with current values
-    titleInput.value = content.querySelector("p:nth-child(1)").textContent.replace("Title: ", "");
-    descInput.value = content.querySelector("p:nth-child(2)").textContent.replace("Description: ", "");
-    dueDateInput.value = content.querySelector("p:nth-child(3)").textContent.replace("Due Date: ", "");
-    prioritySelect.value = content.querySelector("p:nth-child(4)").textContent.replace("Priority: ", "");
-    
-    // Show form and mark as editing
-    formContainer.style.display = "flex";
-    todoItem.dataset.editing = "true"; // Mark this item as being edited
-    todoItem.dataset.toEdit = true; // Store reference
-    todoItem.remove();
-  });
-    
-    deleteBtn.addEventListener("click", function() {
-      todoItem.remove();
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      // Check if we are editing an existing item inside the active workspace
+      const editingIndex = form.getAttribute('data-editing-index');
+
+      if (editingIndex !== null) {
+        // Find that specific todo item inside our current active workspace div
+        const todoItem = currentActiveWorkspace.children[editingIndex];
+        updateTodoDOM(todoItem);
+      } else {
+        // Create a completely brand new todo element block
+        const newTodo = createTodoElement();
+        // Append it strictly inside the active project container layout
+        currentActiveWorkspace.appendChild(newTodo);
+      }
+
+      form.reset();
+      formContainer.style.display = "none";
+      
+      // Refresh list indices tracking numbers
+      reindexWorkspace(currentActiveWorkspace);
     });
-    
-    form.reset();
-    formContainer.style.display = "none";
-  });
+
+    isInitialized = true;
+  }
 }
 
-export {todo};
+// Generates the raw physical task card element block
+function createTodoElement() {
+  const todoItem = document.createElement("div");
+  todoItem.classList.add("todoItem");
+
+  todoItem.innerHTML = `
+    <div class="todoContent">
+      <p><strong>Title:</strong> <span class="t-val">${titleInput.value}</span></p>
+      <p><strong>Description:</strong> <span class="d-val">${descInput.value}</span></p>
+      <p><strong>Due Date:</strong> <span class="date-val">${dueDateInput.value}</span></p>
+      <p><strong>Priority:</strong> <span class="p-val">${prioritySelect.value}</span></p>
+    </div>
+    <div class="todoButtons">
+      <button class="done">✔️Done</button>
+      <button class="edit">✏️Edit</button>
+      <button class="delete">❌Delete</button>
+    </div>
+  `;
+  const content = todoItem.querySelector(".todoContent");
+  // Attach localized action commands directly to this card instance
+  todoItem.querySelector(".done").addEventListener("click", () => {
+    
+    content.style.textDecoration = "line-through";
+    todoItem.querySelector(".done").style.backgroundColor = "gray";
+  });
+
+  todoItem.querySelector(".done").addEventListener("dblclick",function(){
+     content.style.textDecoration = "none";
+    todoItem.querySelector(".done").style.backgroundColor = "rgb(48, 246, 48)";
+  })
+
+  todoItem.querySelector(".edit").addEventListener("click", () => {
+    // Populate form inputs directly from the textual elements inside this specific card
+    titleInput.value = todoItem.querySelector(".t-val").textContent;
+    descInput.value = todoItem.querySelector(".d-val").textContent;
+    dueDateInput.value = todoItem.querySelector(".date-val").textContent;
+    prioritySelect.value = todoItem.querySelector(".p-val").textContent;
+
+    // Track this specific card's position inside its parent container for editing
+    const index = Array.from(todoItem.parentNode.children).indexOf(todoItem);
+    form.setAttribute('data-editing-index', index);
+    
+    formContainer.style.display = "flex";
+  });
+
+  todoItem.querySelector(".delete").addEventListener("click", () => {
+    const parent = todoItem.parentNode;
+    todoItem.remove();
+    reindexWorkspace(parent);
+  });
+
+  return todoItem;
+}
+
+// Updates text nodes inside an existing card when editing finishes
+function updateTodoDOM(todoItem) {
+  todoItem.querySelector(".t-val").textContent = titleInput.value;
+  todoItem.querySelector(".d-val").textContent = descInput.value;
+  todoItem.querySelector(".date-val").textContent = dueDateInput.value;
+  todoItem.querySelector(".p-val").textContent = prioritySelect.value;
+}
+
+// Keeps sequential internal indexing structured correctly for edit tracking updates
+function reindexWorkspace(workspace) {
+  if (form.getAttribute('data-editing-index')) {
+     form.removeAttribute('data-editing-index');
+  }
+}
+
+export { todo };

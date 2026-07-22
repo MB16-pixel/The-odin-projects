@@ -6,7 +6,6 @@ import { todo } from "./todo.js";
 import { project } from "./project.js";
 // Run the setup function to wire up the event listeners
 dom();
-todo();
 project();
 const obj = greetings();
 console.log(obj.greets);
